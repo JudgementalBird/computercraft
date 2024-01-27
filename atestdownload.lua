@@ -1,1 +1,1 @@
-print("text UPDATED")
+print("text UPDATED TWICE")
