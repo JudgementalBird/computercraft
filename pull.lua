@@ -9,6 +9,8 @@ make it use colored text
 test thoroughly
 ]]
 
+print("start message")
+
 function handleurl(theurl)
       http.request(theurl)
       requested = true
