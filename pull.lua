@@ -8,8 +8,17 @@ make it use colored text
 test thoroughly
 ]]
 
+color = {
+      boring = 0x80,
+      warning = 0x2,
+      operation = 0x200,
+      userfailure = 0x4000,
+      progfailure = 0x400,
+      success = 0x2000
+}
+
 version = 1
-term.setTextColor(0x2000)
+term.setTextColor(color.boring)
 print("v "..version)
 
 function handleurl(theurl)
@@ -22,6 +31,7 @@ function handleurl(theurl)
             
             if event == "http_success" then
                   
+                  term.setTextColor(color.operation)
                   print("http success, file downloaded")
                   responsestring = response.readAll()
                   
@@ -34,10 +44,12 @@ function handleurl(theurl)
                   local allfiles = fs.list("")
                   for k,v in pairs(allfiles) do--for every path in the top directory:
                         if v:find(filename) then--if chosen filename is found in this path
+                              term.setTextColor(color.warning)
                               print("found file by same name, it will be overwritten")
                         end
                   end
-                        
+                  
+                  term.setTextColor(color.operation)
                   print("installing file with filename: "..filename)
                   tempwriter = io.open(filename,"w+")
                   tempwriter:write(responsestring)
@@ -45,6 +57,7 @@ function handleurl(theurl)
 
             elseif event == "http_failure" then
 
+                  term.setTextColor(color.progfailure)
                   print("http failure")
                   requested = false 
 
@@ -59,17 +72,21 @@ args = {...}
 if fs.exists("pulldir/") then
       --print("pulldir/ exists")
 else
+      term.setTextColor(color.warning)
       print("pulldir/ not found, making")
       fs.makeDir("pulldir/")
+      term.setTextColor(color.operation)
       print("pulldir/ made")
 end
 --at this point pulldir/ must exist, so now ensure the pulldir/pullcsv exists
 if fs.exists("pulldir/pullcsv") then
       --print("pulldir/pullcsv exists")
 else
+      term.setTextColor(color.warning)
       print("pulldir/pullcsv not found, making")
       temp = io.open("pulldir/pullcsv","w")
       temp:close()
+      term.setTextColor(color.operation)
       print("pulldir/pullcsv made")
 end
 --at this point pulldir/ and pulldir/csv exist
@@ -77,9 +94,12 @@ end
 
 if args[1] == "url" then --user just wants to pull from specific url
       if type(args[2]) == "nil" then
+            term.setTextColor(color.userfailure)
             print("missing second arg after 'url'")
       else
             handleurl(args[2])
+            term.setTextColor(color.success)
+            print("done attempting pull on url")
       end
 
 elseif args[1] == "all" then --user wants to pull from every url in pull csv
@@ -88,9 +108,10 @@ elseif args[1] == "all" then --user wants to pull from every url in pull csv
       tempread:close()
 
       for value in string.gmatch(csvstring, '([^,]+),') do
-            print("handling: '"..value.."'")
             handleurl(value)
       end
+      term.setTextColor(color.success)
+      print("done attempting pull on every url in csv")
 
 elseif args[1] == "add" then --user is just adding to the pull csv
       --read the csv to a string to compare input
@@ -99,13 +120,17 @@ elseif args[1] == "add" then --user is just adding to the pull csv
       tempread:close()
 
       if type(args[2]) == "nil" then
+            term.setTextColor(color.userfailure)
             print("missing second arg after 'add'")
       else
             if not (csvstring:find(args[2])) then
-                  print("adding the following to pullcsv: \n"..args[2]..",")    
+                  term.setTextColor(color.operation)
                   pullcsv = io.open("pulldir/pullcsv","a")
                   pullcsv:write((args[2]..","))
+                  term.setTextColor(color.success)
+                  print("url added to csv")
             else
+                  term.setTextColor(color.success)
                   print("not adding: supplied url found in csv")
             end
       end
@@ -117,15 +142,18 @@ elseif args[1] == "cut" then --user wants to remove one url from pull csv
       tempread:close()
 
       if type(args[2]) == "nil" then
+            term.setTextColor(color.userfailure)
             print("missing second arg after 'cut'")
       else
             local startpos,endpos = csvstring:find(args[2])
             if startpos then
-                  print("removing the following from pullcsv: \n"..args[2]..",")
                   csvstring = csvstring:sub(1,startpos-1) .. csvstring:sub(endpos+1)
                   tempwriter = io.open("pulldir/pullcsv","w+")
                   tempwriter:write(csvstring)
+                  term.setTextColor(color.success)
+                  print("url removed from csv")
             else
+                  term.setTextColor(color.success)
                   print("no match to remove")
             end
       end
