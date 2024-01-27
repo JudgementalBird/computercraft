@@ -3,7 +3,6 @@ todo
 
 implement cut feature
 
-make it spam you less with garbage
 make it use colored text
 
 test thoroughly
@@ -110,7 +109,24 @@ elseif args[1] == "add" then --user is just adding to the pull csv
       end
 
 elseif args[1] == "cut" then --user wants to remove one url from pull csv
+      --read the csv to a string to check, modify, write
+      local tempread = fs.open("pulldir/pullcsv","r")
+      local csvstring = tempread.readAll()
+      tempread:close()
 
+      if type(args[2]) == "nil" then
+            print("missing second arg after 'cut'")
+      else
+            local startpos,endpos = csvstring:find(args[2])
+            if startpos then
+                  print("removing the following from pullcsv: \n"..args[2]..",")
+                  csvstring = csvstring:sub(1,startpos-1) .. csvstring:sub(endpos+1)
+                  tempwriter = io.open("pulldir/pullcsv","w+")
+                  tempwriter:write(csvstring)
+            else
+                  print("no match to remove")
+            end
+      end
 
 else --user messed up the command on purpose or not, print the help string
       print("usage:\npull [url/all/add/cut/(empty)] [(url)]")
