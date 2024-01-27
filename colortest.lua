@@ -9,7 +9,7 @@ color = {
       path = 0x80
 }
 
-version = 1
+version = 1.1
 term.setTextColor(color.boring)
 print("v "..version)
 original = "pulldir/ not found, making"
