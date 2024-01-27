@@ -129,3 +129,5 @@ elseif args[1] == "cut" then --user wants to remove one url from pull csv
 else --user messed up the command on purpose or not, print the help string
       print("usage:\npull [url/all/add/cut/(empty)] [(url)]")
 end
+
+print("end of program, addition message")
