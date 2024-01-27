@@ -30,28 +30,36 @@ function handleurl(theurl)
                         filename = "unknown_download"
                   end
                   
+                  --local allfiles = fs.list("")
+                  --local foundexisting = {}
+                  --for k,v in pairs(allfiles) do--for every path in the top directory:
+                  --      --print("comparing path: "..v)
+                  --      if v:find(filename) then--if chosen filename is found in this path
+                  --            --print("chosen filename found in path, added at k= "..(#foundexisting+1))
+                  --            foundexisting[#foundexisting+1] = v--add path to foundexisting table
+                  --      end
+                  --end
+                  --if #foundexisting == 1 then
+                  --      print("found file by same name, it will be overwritten")
+                  --      --fs.delete(foundexisting[1])
+                  --      --result = {fs.delete(foundexisting[1])}
+                  --      --for k,v in pairs(result) do
+                  --      --      print("k:"..tostring(k).." v:"..tostring(v))
+                  --      --end
+                  --elseif #foundexisting > 1 then--more than 1 existing files with that name, stop and let the user figure it out
+                  --      print("error: found multiple files by same name:")
+                  --      for k,v in ipairs(foundexisting) do
+                  --            print(v)
+                  --      end
+                  --      error("stopping")
+                  --end
+                  --the shit above is not necessary because it is impossible for the thing its checking for to happen
+
                   local allfiles = fs.list("")
-                  local foundexisting = {}
                   for k,v in pairs(allfiles) do--for every path in the top directory:
-                        --print("comparing path: "..v)
                         if v:find(filename) then--if chosen filename is found in this path
-                              --print("chosen filename found in path, added at k= "..(#foundexisting+1))
-                              foundexisting[#foundexisting+1] = v--add path to foundexisting table
+                              print("found file by same name, it will be overwritten")
                         end
-                  end
-                  if #foundexisting == 1 then
-                        print("found file by same name, it will be overwritten")
-                        --fs.delete(foundexisting[1])
-                        --result = {fs.delete(foundexisting[1])}
-                        --for k,v in pairs(result) do
-                        --      print("k:"..tostring(k).." v:"..tostring(v))
-                        --end
-                  elseif #foundexisting > 1 then--more than 1 existing files with that name, stop and let the user figure it out
-                        print("error: found multiple files by same name:")
-                        for k,v in ipairs(foundexisting) do
-                              print(v)
-                        end
-                        error("stopping")
                   end
                         
                   print("installing file with filename: "..filename)
