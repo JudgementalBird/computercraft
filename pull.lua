@@ -17,7 +17,7 @@ color = {
       success = 0x2000
 }
 
-version = 1
+version = 1.1
 term.setTextColor(color.boring)
 print("v "..version)
 
