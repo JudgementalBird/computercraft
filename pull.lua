@@ -8,7 +8,8 @@ make it use colored text
 test thoroughly
 ]]
 
-print("start message")
+version = 1
+print("v "..version)
 
 function handleurl(theurl)
       http.request(theurl)
