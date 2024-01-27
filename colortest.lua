@@ -14,5 +14,5 @@ term.setTextColor(color.boring)
 print("v "..version)
 original = "pulldir/ not found, making"
 pathsection = "88888888"
-term.blit(original,string.rep("9",original:len()),pathsection..string.rep("f",original:sub(pathsection:len()+1):len()))
+term.blit(original, string.rep("9",original:len()),pathsection..string.rep("f",original:sub(pathsection:len()+1):len()))
 write("\n")
