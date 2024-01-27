@@ -9,6 +9,7 @@ test thoroughly
 ]]
 
 version = 1
+term.setTextColor("d")
 print("v "..version)
 
 function handleurl(theurl)
