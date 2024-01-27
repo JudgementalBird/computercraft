@@ -31,9 +31,9 @@ function handleurl(theurl)
                   local allfiles = fs.list("")
                   local foundexisting = {}
                   for k,v in pairs(allfiles) do--for every path in the top directory:
-                        print("comparing path: "..v)
+                        --print("comparing path: "..v)
                         if v:find(filename) then--if chosen filename is found in this path
-                              print("chosen filename found in path, added at k= "..(#foundexisting+1))
+                              --print("chosen filename found in path, added at k= "..(#foundexisting+1))
                               foundexisting[#foundexisting+1] = v--add path to foundexisting table
                         end
                   end
@@ -71,7 +71,7 @@ args = {...}
 
 --ensure pulldir/ directory exists
 if fs.exists("pulldir/") then
-      print("pulldir/ exists")
+      --print("pulldir/ exists")
 else
       print("pulldir/ not found, making")
       fs.makeDir("pulldir/")
@@ -79,7 +79,7 @@ else
 end
 --at this point pulldir/ must exist, so now ensure the pulldir/pullcsv exists
 if fs.exists("pulldir/pullcsv") then
-      print("pulldir/pullcsv exists")
+      --print("pulldir/pullcsv exists")
 else
       print("pulldir/pullcsv not found, making")
       temp = io.open("pulldir/pullcsv","w")
@@ -87,7 +87,7 @@ else
       print("pulldir/pullcsv made")
 end
 --at this point pulldir/ and pulldir/csv exist
-print("all good, moving on")
+--print("all good, moving on")
 
 if args[1] == "url" then --user just wants to pull from specific url
       if type(args[2]) == "nil" then
@@ -115,7 +115,7 @@ elseif args[1] == "add" then --user is just adding to the pull csv
             print("missing second arg after 'add'")
       else
             if not (csvstring:find(args[2])) then
-                  print("adding the following to pullcsv: "..args[2]..",")    
+                  print("adding the following to pullcsv: \n"..args[2]..",")    
                   pullcsv = io.open("pulldir/pullcsv","a")
                   pullcsv:write((args[2]..","))
             else
