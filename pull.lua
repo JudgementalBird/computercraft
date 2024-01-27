@@ -39,12 +39,11 @@ function handleurl(theurl)
                   end
                   if #foundexisting == 1 then
                         print("found file by same name, deleting")
-                        print(foundexisting[1])
-                        print(tostring(("pull.lua")==(foundexisting[1])))
-                        result = {fs.delete(foundexisting[1])}
-                        for k,v in pairs(result) do
-                              print("k:"..tostring(k).." v:"..tostring(v))
-                        end
+                        fs.delete(foundexisting[1])
+                        --result = {fs.delete(foundexisting[1])}
+                        --for k,v in pairs(result) do
+                        --      print("k:"..tostring(k).." v:"..tostring(v))
+                        --end
                   elseif #foundexisting > 1 then--more than 1 existing files with that name, stop and let the user figure it out
                         print("error: found multiple files by same name:")
                         for k,v in ipairs(foundexisting) do
