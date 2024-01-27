@@ -9,8 +9,6 @@ make it use colored text
 test thoroughly
 ]]
 
-print("start of program, extra message")
-
 function handleurl(theurl)
       http.request(theurl)
       requested = true
