@@ -74,7 +74,7 @@ else
       do--change to warning color
             local original = "pulldir/ not found, making"
             local pathsection = 8
-            term.blit(original, string.rep("8",pathsection)..string.rep("9",original:len()-pathsection), string.rep("7",pathsection)..string.rep("f", original:sub(pathsection+1):len()))
+            term.blit(original, string.rep("8",pathsection)..string.rep("1",original:len()-pathsection), string.rep("7",pathsection)..string.rep("f", original:sub(pathsection+1):len()))
             write("\n")
             term.setBackgroundColor(color.background)
       end
@@ -103,7 +103,7 @@ else
       do
             local original = "pulldir/pullcsv made"
             local pathsection = 15
-            term.blit(original, string.rep("8",pathsection)..string.rep("1",original:len()-pathsection), string.rep("7",pathsection)..string.rep("f", original:sub(pathsection+1):len()))
+            term.blit(original, string.rep("8",pathsection)..string.rep("9",original:len()-pathsection), string.rep("7",pathsection)..string.rep("f", original:sub(pathsection+1):len()))
             write("\n")
             term.setBackgroundColor(color.background)
       end
