@@ -9,6 +9,8 @@ make it use colored text
 test thoroughly
 ]]
 
+print("start of program, extra message")
+
 function handleurl(theurl)
       http.request(theurl)
       requested = true
@@ -130,4 +132,3 @@ else --user messed up the command on purpose or not, print the help string
       print("usage:\npull [url/all/add/cut/(empty)] [(url)]")
 end
 
-print("end of program, addition message")
