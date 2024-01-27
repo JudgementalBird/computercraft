@@ -104,7 +104,7 @@ elseif args[1] == "all" then --user wants to pull from every url in pull csv
       tempread:close()
 
       for value in string.gmatch(csvstring, '([^,]+),') do
-            print("handling: "..value)
+            print("handling: '"..value.."'")
             handleurl(value)
       end
 
