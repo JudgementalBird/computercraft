@@ -10,6 +10,7 @@ color = {
       userfailure = 0x4000,
       progfailure = 0x400,
       success = 0x2000,
+      note = 0x10,
       background = term.getBackgroundColor(),
       path = 0x80
 }
@@ -178,6 +179,7 @@ elseif args[1] == "cut" then --user wants to remove one url from pull csv
       end
 
 else --user messed up the command on purpose or not, print the help string
+      term.setTextColor(color.note)
       print("usage:\npull [url/all/add/cut/(empty)] [(url)]")
 end
 
