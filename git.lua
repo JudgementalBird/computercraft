@@ -21,7 +21,7 @@ function handleurl(theurl)
                   
                   print("http success, file downloaded")
                   responsestring = response.readAll()
-                  if usedurl:find("%.lua") then--escape the . with %, effectively if .lua is in the string then:
+                  if usedurl:find("%.lua") then--escape the . with %, effectively "if .lua is in the string then:"
                         filename = usedurl:match("([^/]-)$")
                   else
                         filename = "unknown_download"
