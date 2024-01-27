@@ -9,7 +9,9 @@ color = {
       operation = 0x200,
       userfailure = 0x4000,
       progfailure = 0x400,
-      success = 0x2000
+      success = 0x2000,
+      background = term.getBackgroundColor(),
+      path = 0x80
 }
 
 version = 1.2
@@ -27,7 +29,7 @@ function handleurl(theurl)
             if event == "http_success" then
                   
                   term.setTextColor(color.operation)
-                  print("http success, file downloaded")
+                  print("HTTP success.")
                   responsestring = response.readAll()
                   
                   if usedurl:find("%.lua") then--escape the . with %, effectively "if .lua is in the string then:"
@@ -40,20 +42,22 @@ function handleurl(theurl)
                   for k,v in pairs(allfiles) do--for every path in the top directory:
                         if v:find(filename) then--if chosen filename is found in this path
                               term.setTextColor(color.warning)
-                              print("found file by same name, it will be overwritten")
+                              print("File found with download name, overwriting.")
                         end
                   end
                   
-                  term.setTextColor(color.operation)
-                  print("installing file with filename: "..filename)
                   tempwriter = io.open(filename,"w+")
                   tempwriter:write(responsestring)
+                  
+                  term.setTextColor(color.operation)
+                  print("File "..filename.. " installed.")
+                  
                   requested = false
 
             elseif event == "http_failure" then
 
                   term.setTextColor(color.progfailure)
-                  print("http failure")
+                  print("HTTP failure.")
                   requested = false 
 
             end
@@ -67,8 +71,10 @@ args = {...}
 if fs.exists("pulldir/") then
       --print("pulldir/ exists")
 else
+      --term.setBackgroundColor(color.background)
       term.setTextColor(color.warning)
       print("pulldir/ not found, making")
+      --term.setBackgroundColor(color.background)
       fs.makeDir("pulldir/")
       term.setTextColor(color.operation)
       print("pulldir/ made")
