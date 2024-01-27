@@ -1,10 +1,5 @@
 --[[
 todo
-
-implement cut feature
-
-make it use colored text
-
 test thoroughly
 ]]
 
