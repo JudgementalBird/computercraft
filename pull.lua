@@ -9,7 +9,7 @@ test thoroughly
 ]]
 
 color = {
-      boring = 0x80,
+      boring = 0x100,
       warning = 0x2,
       operation = 0x200,
       userfailure = 0x4000,
