@@ -71,24 +71,42 @@ args = {...}
 if fs.exists("pulldir/") then
       --print("pulldir/ exists")
 else
-      --term.setBackgroundColor(color.background)
-      term.setTextColor(color.warning)
-      print("pulldir/ not found, making")
-      --term.setBackgroundColor(color.background)
+      do--change to warning color
+            local original = "pulldir/ not found, making"
+            local pathsection = 8
+            term.blit(original, string.rep("8",pathsection)..string.rep("9",original:len()-pathsection), string.rep("7",pathsection)..string.rep("f", original:sub(pathsection+1):len()))
+            write("\n")
+            term.setBackgroundColor(color.background)
+      end
       fs.makeDir("pulldir/")
-      term.setTextColor(color.operation)
-      print("pulldir/ made")
+      do
+            local original = "pulldir/ made"
+            local pathsection = 8
+            term.blit(original, string.rep("8",pathsection)..string.rep("9",original:len()-pathsection), string.rep("7",pathsection)..string.rep("f", original:sub(pathsection+1):len()))
+            write("\n")
+            term.setBackgroundColor(color.background)
+      end
 end
 --at this point pulldir/ must exist, so now ensure the pulldir/pullcsv exists
 if fs.exists("pulldir/pullcsv") then
       --print("pulldir/pullcsv exists")
 else
-      term.setTextColor(color.warning)
-      print("pulldir/pullcsv not found, making")
+      do--change to warning color
+            local original = "pulldir/pullcsv not found, making"
+            local pathsection = 15
+            term.blit(original, string.rep("8",pathsection)..string.rep("1",original:len()-pathsection), string.rep("7",pathsection)..string.rep("f", original:sub(pathsection+1):len()))
+            write("\n")
+            term.setBackgroundColor(color.background)
+      end
       temp = io.open("pulldir/pullcsv","w")
       temp:close()
-      term.setTextColor(color.operation)
-      print("pulldir/pullcsv made")
+      do
+            local original = "pulldir/pullcsv made"
+            local pathsection = 15
+            term.blit(original, string.rep("8",pathsection)..string.rep("1",original:len()-pathsection), string.rep("7",pathsection)..string.rep("f", original:sub(pathsection+1):len()))
+            write("\n")
+            term.setBackgroundColor(color.background)
+      end
 end
 --at this point pulldir/ and pulldir/csv exist
 --print("all good, moving on")
