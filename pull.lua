@@ -119,7 +119,7 @@ elseif args[1] == "add" then --user is just adding to the pull csv
                   pullcsv = io.open("pulldir/pullcsv","a")
                   pullcsv:write((args[2]..","))
             else
-                  print("supplied url was found in csv, not adding")
+                  print("not adding: supplied url found in csv")
             end
       end
 
