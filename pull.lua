@@ -31,7 +31,9 @@ function handleurl(theurl)
                   local allfiles = fs.list("")
                   local foundexisting = {}
                   for k,v in pairs(allfiles) do--for every path in the top directory:
+                        print("comparing path: "..v)
                         if v:find(filename) then--if chosen filename is found in this path
+                              print("chosen filename found in path, added at k= "..(#foundexisting+1))
                               foundexisting[#foundexisting+1] = v--add path to foundexisting table
                         end
                   end
