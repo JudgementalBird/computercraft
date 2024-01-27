@@ -3,6 +3,7 @@ todo
 implement cut feature
 
 make it so if you try to add a URL thats already in the csv then it wont let you
+
 make it spam you less with garbage
 make it use colored text
 
