@@ -40,6 +40,7 @@ function handleurl(theurl)
                   if #foundexisting == 1 then
                         print("found file by same name, deleting")
                         print(foundexisting[1])
+                        print(tostring(("pull.lua")==(foundexisting[1])))
                         result = fs.delete(foundexisting[1])
                         print(tostring(result))
                   elseif #foundexisting > 1 then--more than 1 existing files with that name, stop and let the user figure it out
