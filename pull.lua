@@ -40,8 +40,8 @@ function handleurl(theurl)
                         end
                   end
                   if #foundexisting == 1 then
-                        print("found file by same name, deleting")
-                        fs.delete(foundexisting[1])
+                        print("found file by same name, it will be overwritten")
+                        --fs.delete(foundexisting[1])
                         --result = {fs.delete(foundexisting[1])}
                         --for k,v in pairs(result) do
                         --      print("k:"..tostring(k).." v:"..tostring(v))
@@ -55,7 +55,7 @@ function handleurl(theurl)
                   end
                         
                   print("installing file with filename: "..filename)
-                  tempwriter = io.open(filename,"w")
+                  tempwriter = io.open(filename,"w+")
                   tempwriter:write(responsestring)
                   requested = false
 
