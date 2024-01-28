@@ -15,7 +15,7 @@ term.setBackgroundColor(color.white)
 term.clear()
 term.setTextColor(color.black)
 
-term.setCursorPos(0,0)
+term.setCursorPos(1,1)
 version = 1
 term.setTextColor(color.lgray)
 term.write("v "..version)
