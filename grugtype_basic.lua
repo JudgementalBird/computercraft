@@ -29,6 +29,6 @@ term.write("Grugtype Basic")
 
 
 str = "x:"..w.." y:"..h
-term.setCursorPos(w-(str:len()/2),1)
+term.setCursorPos(w-(str:len()),1)
 term.setTextColor(color.lgray)
 term.write(str)
