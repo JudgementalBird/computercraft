@@ -34,7 +34,7 @@ term.write(str)
 
 --utility bar
 term.setCursorPos(1,2)
-term.setTextColor(color.lgray)
+term.setBackgroundColor(color.lgray)
 term.write(string.rep(" ",w))
 
 --paper
@@ -44,7 +44,4 @@ for i = 3,h do
       term.write(string.rep(" ",pw))
 end
 
-
-while true do
-      
-end
+sleep(4)
