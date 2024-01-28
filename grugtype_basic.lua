@@ -26,9 +26,17 @@ term.setTextColor(color.lgray)
 term.write("v "..version.." - ")
 term.setTextColor(color.white)
 term.write("Grugtype Basic")
-
-
+--text top right
 str = "x:"..w.." y:"..h
 term.setCursorPos(w-(str:len())+1,1)
 term.setTextColor(color.lgray)
 term.write(str)
+
+--paper
+term.setCursorPos(w/2-pw/2,3)
+term.setBackgroundColor(color.white)
+term.write(string.rep(" ",pw))
+
+while true do
+      
+end
