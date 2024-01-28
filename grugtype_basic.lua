@@ -27,6 +27,7 @@ term.write("v "..version.." - ")
 term.setTextColor(color.white)
 term.write("Grugtype Basic")
 
-term.setCursorPos(w/2-1,h/2)
+str = "x:"..w.." y:"..h
+term.setCursorPos(w/2-(str:len()/2),h/2)
 term.setTextColor(color.white)
-term.write("x:"..w.." y:"..h)
+term.write(str)
