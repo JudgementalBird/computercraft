@@ -32,9 +32,14 @@ term.setCursorPos(w-(str:len())+1,1)
 term.setTextColor(color.lgray)
 term.write(str)
 
+--utility bar
+term.setCursorPos(1,2)
+term.setTextColor(color.lgray)
+term.write(string.rep(" ",w))
+
 --paper
 term.setBackgroundColor(color.white)
-for i = 3,19 do
+for i = 3,h do
       term.setCursorPos(w/2-pw/2,i)
       term.write(string.rep(" ",pw))
 end
