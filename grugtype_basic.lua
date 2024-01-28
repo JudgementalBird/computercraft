@@ -19,6 +19,7 @@ term.setTextColor(color.black)
 term.setCursorPos(1,1)
 version = 1
 term.setTextColor(color.lgray)
-term.write("v "..version.."   ")
+term.write("v "..version.." - ")
 term.setTextColor(color.dgray)
 term.write("Grugtype Basic")
+term.setCursorPos(39,15)
