@@ -12,7 +12,7 @@ color = {
       path = 0x80
 }
 
-version = 1
+version = 1.1
 
 w,h = term.getSize()--51,19
 pw,ph = 25,21
