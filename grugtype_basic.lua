@@ -12,14 +12,21 @@ color = {
       path = 0x80
 }
 
-term.setBackgroundColor(color.white)
-term.clear()
-term.setTextColor(color.black)
-
-term.setCursorPos(1,1)
 version = 1
+
+w,h = term.getSize()
+pw,ph = 25,21
+
+term.setBackgroundColor(color.dgray)
+term.clear()
+
+--text top left
+term.setCursorPos(1,1)
 term.setTextColor(color.lgray)
 term.write("v "..version.." - ")
 term.setTextColor(color.dgray)
 term.write("Grugtype Basic")
-term.setCursorPos(38,12)
+
+term.setCursorPos(w/2-1,h/2)
+term.setTextColor(color.lgray)
+term.write("x:"..w.." y:"..h)
