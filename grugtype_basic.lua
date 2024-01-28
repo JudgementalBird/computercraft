@@ -14,7 +14,7 @@ color = {
 
 version = 1
 
-w,h = term.getSize()
+w,h = term.getSize()--51,19
 pw,ph = 25,21
 
 term.setBackgroundColor(color.dgray)
@@ -24,9 +24,9 @@ term.clear()
 term.setCursorPos(1,1)
 term.setTextColor(color.lgray)
 term.write("v "..version.." - ")
-term.setTextColor(color.dgray)
+term.setTextColor(color.white)
 term.write("Grugtype Basic")
 
 term.setCursorPos(w/2-1,h/2)
-term.setTextColor(color.lgray)
+term.setTextColor(color.white)
 term.write("x:"..w.." y:"..h)
