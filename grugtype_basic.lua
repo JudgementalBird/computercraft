@@ -23,7 +23,6 @@ function dodebug(str,id,timeout)
             end
       end
 end
-
 function papertoxy(paperpos)
       local x = w/2-pw/2+paperpos.pos-1
       local y = 3+paperpos.line-viewlineoffset
@@ -34,6 +33,41 @@ function xytopaper(x,y)
       paperpos.pos = math.max(math.min(x-w/2 + pw/2 + 1,pw),1)
       paperpos.line = math.max(math.min(y - 3 + viewlineoffset,ph),1)
       return paperpos
+end
+function checkoffsetview()
+      if (cursorpos.line < 10) and (viewlineoffset > (cursorpos.line - 2)) then
+            viewlineoffset = cursorpos.line - 2
+      elseif cursorpos.line > 12 and (viewlineoffset < (cursorpos.line - 14)) then
+            viewlineoffset = cursorpos.line - 14
+      end
+end
+function checkincrementcursor()
+      if cursorpos.pos == pw and cursorpos.line ~= ph then
+            cursorpos.line = cursorpos.line + 1
+            cursorpos.pos = 1
+      else
+            cursorpos.pos = math.min(cursorpos.pos + 1,pw)
+      end
+      checkoffsetview()
+end
+function checkdecrementcursor()
+      if cursorpos.pos == 1 and cursorpos.line ~= 1 then
+            cursorpos.line = cursorpos.line - 1
+            cursorpos.pos = pw
+      else
+            cursorpos.pos = math.max(cursorpos.pos - 1,1)
+      end
+      checkoffsetview()
+end
+function paperserialize()
+      local alllines = ""--concat all paper lines to one string
+      for k,v in ipairs(paper) do
+            alllines = alllines..v
+      end
+      
+      local allinespos = pw*(cursorpos.line-1)+cursorpos.pos--convert cursor pos to pos in alllines string
+
+      return alllines, allinespos
 end
 
 
@@ -50,56 +84,86 @@ color = {
 
 eventkeys = {
       ["up"] = function()
-            dodebug("up pressed","c",14)
+            dodebug("up","c",14)
             cursorpos.line = math.max(cursorpos.line - 1,1)
+            checkoffsetview()
       end,
       ["down"] = function()
-            dodebug("down pressed","d",14)
+            dodebug("down","d",14)
             cursorpos.line = math.min(cursorpos.line + 1,ph)
+            checkoffsetview()
       end,
       ["left"] = function()
-            dodebug("left pressed","e",14)
-            if cursorpos.pos == 1 and cursorpos.line ~= 1 then
-                  cursorpos.line = cursorpos.line - 1
-                  cursorpos.pos = pw
-            else
-                  cursorpos.pos = math.max(cursorpos.pos - 1,1)
-            end
+            dodebug("left","e",14)
+            checkdecrementcursor()
       end,
       ["right"] = function()
-            dodebug("right pressed","f",14)
-            if cursorpos.pos == pw and cursorpos.line ~= ph then
-                  cursorpos.line = cursorpos.line + 1
-                  cursorpos.pos = 1
-            else
-                  cursorpos.pos = math.min(cursorpos.pos + 1,pw)
-            end
+            dodebug("right","f",14)
+            checkincrementcursor()
       end,
       ["enter"] = function()
-            dodebug("enter pressed","g",14)
+            dodebug("enter","g",14)
             if not (cursorpos.line == ph) then
                   cursorpos.pos = 1
                   cursorpos.line = cursorpos.line + 1
             end
+            checkoffsetview()
       end,
       ["home"] = function()
-            dodebug("home pressed","h",14)
+            dodebug("home","h",14)
             cursorpos.pos = 1
       end,
       ["end"] = function()
-            dodebug("end pressed","i",14)
+            dodebug("end","i",14)
             cursorpos.pos = pw
       end,
       ["backspace"] = function()
-            dodebug("backspace pressed","j",14)
-            if cursorpos.pos == 1 and cursorpos.line ~= 1 then
-                  cursorpos.line = cursorpos.line - 1
-                  cursorpos.pos = pw
-            else
-                  cursorpos.pos = math.max(cursorpos.pos - 1,1)
+            dodebug("backspace","j",14)
+
+            checkdecrementcursor()
+
+            --if not (paper[cursorpos.line]:sub(cursorpos.pos,cursorpos.pos) == "\007") then
+                  local alllines, allinespos = paperserialize()
+
+                  local nextempty = alllines:find("\007",allinespos)
+                  if nextempty then
+                        local uptobackspc = alllines:sub(1,allinespos-1)
+                        local afterbackspctoempty = alllines:sub(allinespos+1,nextempty-1)
+                        local startofemptytoend = alllines:sub(nextempty)
+
+                        alllines = uptobackspc..afterbackspctoempty.."\007"..startofemptytoend
+                        for i = 1,ph do
+                              paper[i] = alllines:sub(pw*(i-1)+1,pw*i) 
+                        end
+                  else--no empty at all left in document:
+                        
+                        -- need to handle this case later
+
+                  end
+            --end
+      end,
+      ["delete"] = function()
+            dodebug("del","o",14)
+
+            if not (cursorpos.line == ph and cursorpos.pos == pw) then
+                  local alllines, allinespos = paperserialize()
+
+                  local nextempty = alllines:find("\007",allinespos)
+                  if nextempty then
+                        local uptobackspc = alllines:sub(1,allinespos-1)
+                        local afterbackspctoempty = alllines:sub(allinespos+1,nextempty-1)
+                        local startofemptytoend = alllines:sub(nextempty)
+
+                        alllines = uptobackspc..afterbackspctoempty.."\007"..startofemptytoend
+                        for i = 1,ph do
+                              paper[i] = alllines:sub(pw*(i-1)+1,pw*i) 
+                        end
+                  else--no empty at all left in document:
+                        
+                        -- need to handle this case later
+
+                  end
             end
-            paper[cursorpos.line] = paper[cursorpos.line]:sub(1,cursorpos.pos-1).."\007"..paper[cursorpos.line]:sub(cursorpos.pos+1)
-            
       end
 }
 --[[
@@ -108,9 +172,9 @@ eventkeys = {
 "leftShift"]]
 
 --[[todo
-      ctrl left right
-      ctrl home ctrl end
-      view moving with cursor
+      toggleable insert, shown in utility bar
+      ctrl left / right
+      ctrl home / end
       saving feature
       printing feature]]
 
@@ -119,7 +183,7 @@ debugs = {}
 cursorpos = {line=1,pos=1}
 w,h = term.getSize()--51,19
 pw,ph = 25,21
-viewlineoffset=0
+viewlineoffset=-1
 
 --set up paper data
 paper = {}
@@ -138,50 +202,36 @@ while true do
                         eventkeys[keys.getName(event[2])](event[2])
                   end
             end
-
       elseif event[1] == "char" then--[2]->character
             if false then
                   paper[cursorpos.line] = paper[cursorpos.line]:sub(1,cursorpos.pos-1)..event[2]..paper[cursorpos.line]:sub(cursorpos.pos+1)
+                  checkincrementcursor()
             else
-                  dodebug("len:"..paper[cursorpos.line]:len(),"len",20)
-                  local nextempty = paper[cursorpos.line]:find("\007",cursorpos.pos)
+                  local alllines, allinespos = paperserialize()
+
+                  local nextempty = alllines:find("\007",allinespos)
 
                   if nextempty then
-                        local uptochar = paper[cursorpos.line]:sub(1,cursorpos.pos-1)
-                        local afterchartoempty = paper[cursorpos.line]:sub(cursorpos.pos,nextempty-1)
-                        local afteremptytoend = paper[cursorpos.line]:sub(nextempty+1)
-                        
-                        paper[cursorpos.line] = uptochar..event[2]..afterchartoempty..afteremptytoend
-                        dodebug("len2:"..paper[cursorpos.line]:len(),"len2",20)
-                  else
-                        local nohome = true
-                        while nohome do
-                              --[[
-                              if there is a free spot on the line+1 then
-                                    line = uptochar..event[2]..afterchartoendminus1char
-                                    line+1 = linelastchar..uptoempty..afteremptytoend
-                              elseif there is a free spot on line+2 then
-                                    line = is uptochar..event[2]..afterchartoendminus1char
-                                    line+1 = linelastchar..wholeline+1minus1char
-                                    line+2 = line+1lastchar..uptoempty..afteremptytoend
-                              ]]
+                        local uptochar = alllines:sub(1,allinespos-1)
+                        local afterchartoempty = alllines:sub(allinespos,nextempty-1)
+                        local afteremptytoend = alllines:sub(nextempty+1)
+
+                        alllines = uptochar..event[2]..afterchartoempty..afteremptytoend
+                        for i = 1,ph do
+                              paper[i] = alllines:sub(pw*(i-1)+1,pw*i) 
                         end
+                        checkincrementcursor()
                   end
-            end
-            if cursorpos.pos == pw and cursorpos.line ~= ph then
-                  cursorpos.line = cursorpos.line + 1
-                  cursorpos.pos = 1
-            else
-                  cursorpos.pos = math.min(cursorpos.pos + 1,pw)
             end
 
       elseif event[1] == "mouse_scroll" then--[2]->dir, [3]->x, [4]->y
             viewlineoffset = math.min(math.max(viewlineoffset + event[2],-2),8)
-            dodebug("scrolled "..viewlineoffset,"k",40)
+            dodebug("vline "..viewlineoffset,"k",40)
 
       elseif event[1] == "mouse_click" then--[2]->button, [3]->x, [4]->y
-            dodebug("clicked","l",14)
+            dodebug("click","l",14)
             cursorpos = xytopaper(event[3],event[4])
+            checkoffsetview()
       end
       
 
@@ -197,7 +247,8 @@ while true do
                   term.setTextColor(color.black)
                   term.setCursorPos(w/2-pw/2,(i+2))
                   term.write(paper[index]:gsub("\007", " "))
-                  
+                  --term.write(paper[index])
+
                   term.setBackgroundColor(color.dgray)
                   term.setTextColor(color.lgray)
                   term.setCursorPos(w/2-pw/2-tostring(index):len(),(i+2))
@@ -209,7 +260,8 @@ while true do
       term.setBackgroundColor(color.green)
       term.setTextColor(color.black)
       term.setCursorPos(papertoxy(cursorpos))
-      term.write(paper[cursorpos.line]:sub(cursorpos.pos,cursorpos.pos))
+      --term.write(paper[cursorpos.line]:sub(cursorpos.pos,cursorpos.pos))
+      term.write(paper[cursorpos.line]:sub(cursorpos.pos,cursorpos.pos):gsub("\007", " "))
 
       --text top left
       term.setBackgroundColor(color.dgray)
@@ -231,8 +283,8 @@ while true do
       term.write(string.rep(" ",w))
 
       ---- DEBUG ----
-      dodebug("line "..cursorpos.line,"a")
-      dodebug("pos "..cursorpos.pos,"b")
+      dodebug("cline "..cursorpos.line,"a")
+      dodebug("cpos "..cursorpos.pos,"b")
       term.setBackgroundColor(color.orange)
       term.setTextColor(color.black)
       
