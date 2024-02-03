@@ -530,6 +530,14 @@ if dirver == "d" then
 
 	excavateXY()
 
+	print("Volume mined, returning to start pos.")
+
+	for i = 1,(z-1) do
+
+		up()
+
+	end
+
 else
 
 	for i = 1,(z-1) do
@@ -542,16 +550,22 @@ else
 
 	excavateXY()
 
+	print("Volume mined, returning to start pos.")
+
+	for i = 1,(z-1) do
+
+		down()
+
+	end
+
 end
 
-print("Volume mined, turtle has stopped.")
+
+print("Done, turtle has stopped.")
 
 print("	---	")
 
-
-
 spentfuel = beginfuel-fuellevel()
-
 
 
 if fuellevel() == 0 then
