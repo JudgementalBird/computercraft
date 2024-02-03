@@ -21,12 +21,12 @@ fuel = {
 }
 
 loc = {
-	goup = function()
-	turtleturtle.up()
-		moves = moves+1
-	end,
 	go = function()
 		turtle.forward()
+		moves = moves+1
+	end,
+	goup = function()
+		turtle.up()
 		moves = moves+1
 	end,
 	godown = function()
@@ -73,7 +73,44 @@ loc = {
 	end
 }
 
+function getpos()
+	return vector.new(turtle.getWorldPosition())
+end
 
---x, y, z = turtle.getWorldPosition()
+function getfacing()
+	local start = vector.new(turtle.getWorldPosition())
+	loc.go()
+
+function gotochunkmiddle()
+	getpos()
+end
+
+
+
 
 moves = 0
+
+
+
+
+--[[
+(the direction we start facing is the direction we will continue into)
+
+while true do
+	analyze for debris
+	if there is debris:
+		gotochunkmiddle()
+		go to center of the chunk
+		check if 
+		scan for debris
+		switch to pickaxe
+		for the amount of debris:
+			go/dig to be touching the closest debris
+			use the appropriate direction dig function and possibly orient to dig the debris navigated to
+		end
+	end
+	navigate into closest block inside next chunk (next according to starting orientation)
+end
+
+
+]]
