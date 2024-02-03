@@ -164,6 +164,16 @@ eventkeys = {
 
                   end
             end
+      end,
+      ["leftAlt"] = function()
+            dodebug("leftAlt","p",14)
+            --save
+            local tempwriter = io.open("pulldir/pullcsv","w+")
+            tempwriter:write(csvstring)
+      end,
+      ["rightAlt"] = function()
+            dodebug("rightAlt","q",14)
+            --print
       end
 }
 --[[
@@ -172,13 +182,14 @@ eventkeys = {
 "leftShift"]]
 
 --[[todo
+      
       toggleable insert, shown in utility bar
       ctrl left / right
       ctrl home / end
       saving feature
       printing feature]]
-
 version = 1.1
+args = {...}
 debugs = {}       
 cursorpos = {line=1,pos=1}
 w,h = term.getSize()--51,19
@@ -186,9 +197,26 @@ pw,ph = 25,21
 viewlineoffset=-1
 
 --set up paper data
-paper = {}
-for i = 1,ph do
-      paper[i] = string.rep("\007",pw)
+if args[2] then
+      local tempread = fs.open("latest_paper","r")
+      if not (type(tempread) == "table") then
+            --if file handle cannot be successfully established
+            error("unghh~ nyaaa~")
+      end
+      --read serialized version of last paper to a string !
+      local latest_paper = tempread.readAll()
+      tempread:close()
+
+      --deserialize and put into paper table!
+      for i = 1,ph do
+            paper[i] = latest_paper:sub(pw*(i-1)+1,pw*i) 
+      end
+else
+      --make doc
+      paper = {}
+      for i = 1,ph do
+            paper[i] = string.rep("\007",pw)
+      end
 end
 
 while true do
