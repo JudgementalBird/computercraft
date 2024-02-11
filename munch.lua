@@ -40,7 +40,7 @@ fuel = {
 		shell.run("refuel all")
 	end,
 	checkinformfuel = function()
-		if (moves % 100 == 0) then 
+		if (moves % 100 == 0) then
 			print("Periodic update:")
 			print("Turtle has "..fuellevel().." fuel, "..fuelpercent().."% remaining.")
 			print("	---	")
@@ -162,7 +162,17 @@ function getfacing()
 	loc.safego()
 	local difference = start - getpos()
 	loc.safegoback()
-	print(math.atan2(difference.x,difference.z))
+
+	print(difference.x.." "..difference.z)
+	--[[
+		function  (x, y, z)
+			return 1 * (x < 0 and 1 or 0) + 2 * (z < 0 and 1 or 0) + 3 * (z > 0 and 1 or 0) + 4 * (x > 0 and 1 or 0)
+		end
+		-1,  0	 0,
+		0,  0  -1,
+		0,  0   1,
+		1,  0   0,
+	]]
 	return difference
 end
 
@@ -185,17 +195,17 @@ end
 
 moves = 0
 heldtool = "geo"
-facing = getfacing()
+initialfacing = getfacing()
 loc.turnright()
-facing = getfacing()
+getfacing()
 loc.turnright()
-facing = getfacing()
+getfacing()
 loc.turnright()
-facing = getfacing()
+getfacing()
 loc.turnright()
---initialfacing = copytable(facing)
 
-while false do
+--[[
+while true do
 
 	--analyze for debris
 	result = giveanalyze()
@@ -209,11 +219,11 @@ while false do
 	--if there is debris
 	if debrisinchunk > 0 then
 		gotochunkmiddle()
-
 	end
 	--navigate into closest block inside next chunk (next according to starting orientation)
-
-end
+	
+	
+end]]
 
 
 
