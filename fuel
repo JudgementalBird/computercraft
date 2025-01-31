@@ -1,0 +1,9 @@
+fuellevel = turtle.getFuelLevel()
+fuellimit = turtle.getFuelLimit()
+print("Has "..fuellevel.." out of "..fuellimit)
+print("Refueling from slot 1 until program is terminated!")
+turtle.select(1)
+while true do
+  turtle.refuel()
+end
+  
