@@ -284,79 +284,79 @@ args = {
 
     {   
 
-    	name = "argdirhor",
+		name = "argdirhor",
 
-        val = argdirhor,
+		val = argdirhor,
 
-        type = "text",
+		type = "text",
 
-        valids = {"l","r"},
+		valids = {"l","r"},
 
-        prefix = "direction L/R: "
+		prefix = "direction L/R: "
 
-    },
+	},
 
-    {
+	{
 
-    	name = "argdirver",
+		name = "argdirver",
 
-        val = argdirver,
+		val = argdirver,
 
-        type = "text",
+		type = "text",
 
-        valids = {"u","d"},
+		valids = {"u","d"},
 
-        prefix = "direction U/D: "
+		prefix = "direction U/D: "
 
-    },
+	},
 
-    {
+	{
 
-    	name = "argx",
+		name = "argx",
 
-        val = argx,
+		val = argx,
 
-        type = "number",
+		type = "number",
 
-        prefix = "X size: "
+		prefix = "X size: "
 
-    },
+	},
 
-    {
+	{
 
-    	name = "argy",
+		name = "argy",
 
-        val = argy,
+		val = argy,
 
-        type = "number",
+		type = "number",
 
-        prefix = "Y size: "
+		prefix = "Y size: "
 
-    },
+	},
 
-    {
+	{
 
-    	name = "argz",
+		name = "argz",
 
-        val = argz,
+		val = argz,
 
-        type = "number",
+		type = "number",
 
-        prefix = "Z size: "
+		prefix = "Z size: "
 
-    },
+	},
 
-    {
+	{
 
-    	name = "argpullfrominv",
+		name = "argpullfrominv",
 
-        val = argpullfrominv,
+		val = argpullfrominv,
 
-        type = "text",
+		type = "text",
 
-        valids = {"y","n"},
+		valids = {"y","n"},
 
-        prefix = "pull fuel from inv Y/N: "
+		prefix = "pull fuel from inv Y/N: "
 
     },
 
@@ -422,7 +422,7 @@ function handlearg(arg,currentarg)
 
         write(arg.prefix)
 
-	  args[currentarg].val = read()
+		args[currentarg].val = read()
 
         return handlearg(arg,currentarg)
 
@@ -502,11 +502,11 @@ else
 
 end
 
- 
+
 
 if pullfrominv then refuel() end
 
- 
+
 
 beginfuel = fuellevel()
 

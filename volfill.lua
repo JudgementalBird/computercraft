@@ -61,10 +61,10 @@ function down()
 	checkannouncefuel()
 end
 function back()
-      turtle.back()
-      moves = moves+1
-      checkrefuel()
-      checkannouncefuel()
+	turtle.back()
+	moves = moves+1
+	checkrefuel()
+	checkannouncefuel()
 end
 
 function err(cause)
@@ -97,79 +97,79 @@ end
 argdirhor, argdirver, argx, argy, argz, argpullfrominv = ...
 
 args = {
-    {   
-    	name = "argdirhor",
-        val = argdirhor,
-        type = "text",
-        valids = {"l","r"},
-        prefix = "direction L/R: "
-    },
-    {
-    	name = "argdirver",
-        val = argdirver,
-        type = "text",
-        valids = {"u","d"},
-        prefix = "direction U/D: "
-    },
-    {
-    	name = "argx",
-        val = argx,
-        type = "number",
-        prefix = "X size: "
-    },
-    {
-    	name = "argy",
-        val = argy,
-        type = "number",
-        prefix = "Y size: "
-    },
-    {
-    	name = "argz",
-        val = argz,
-        type = "number",
-        prefix = "Z size: "
-    },
-    {
-    	name = "argpullfrominv",
-        val = argpullfrominv,
-        type = "text",
-        valids = {"y","n"},
-        prefix = "pull fuel from inv Y/N: "
-    },
+	{   
+		name = "argdirhor",
+		val = argdirhor,
+		type = "text",
+		valids = {"l","r"},
+		prefix = "direction L/R: "
+	},
+	{
+		name = "argdirver",
+		val = argdirver,
+		type = "text",
+		valids = {"u","d"},
+		prefix = "direction U/D: "
+	},
+	{
+		name = "argx",
+		val = argx,
+		type = "number",
+		prefix = "X size: "
+	},
+	{
+		name = "argy",
+		val = argy,
+		type = "number",
+		prefix = "Y size: "
+	},
+	{
+		name = "argz",
+		val = argz,
+		type = "number",
+		prefix = "Z size: "
+	},
+	{
+		name = "argpullfrominv",
+		val = argpullfrominv,
+		type = "text",
+		valids = {"y","n"},
+		prefix = "pull fuel from inv Y/N: "
+	},
 }
 
 types = {
-    number = function(input)
-        if tonumber(input.val) then
-            return --is a number and greater than 1
-        else
-            write(input.prefix);input.val = read()
-            return types.number(input)
-        end
-    end,
-    text = function(input,currentarg)
-        local haserrored = true
-        args[currentarg].val = string.lower(input.val)
-        for k,v in pairs(input.valids) do
-            if input.val == v then haserrored = false end
-        end
-        if haserrored then
-            write(input.prefix);input.val = read()
-            return types.text(input,currentarg)
-        end
-    end
+	number = function(input)
+		if tonumber(input.val) then
+			return --is a number and greater than 1
+		else
+			write(input.prefix);input.val = read()
+			return types.number(input)
+		end
+	end,
+	text = function(input,currentarg)
+		local haserrored = true
+		args[currentarg].val = string.lower(input.val)
+		for k,v in pairs(input.valids) do
+			if input.val == v then haserrored = false end
+		end
+		if haserrored then
+			write(input.prefix);input.val = read()
+			return types.text(input,currentarg)
+		end
+	end
 }
 
 function handlearg(arg,currentarg)
-    if arg.val ~= nil then
-        --value is SOMETHING
-        types[arg.type](arg,currentarg)
-        return
-    else
-        write(arg.prefix)
-	  args[currentarg].val = read()
-        return handlearg(arg,currentarg)
-    end
+	if arg.val ~= nil then
+		--value is SOMETHING
+		types[arg.type](arg,currentarg)
+		return
+	else
+		write(arg.prefix)
+		args[currentarg].val = read()
+		return handlearg(arg,currentarg)
+	end
 end
 
 function validateinputs()
@@ -179,7 +179,7 @@ function validateinputs()
 end
 
 function removeprefixes()
-    for k,v in ipairs(args) do
+    for _,v in ipairs(args) do
         _G[string.sub(v.name,4,#v.name)] = v.val
     end
 end
@@ -207,9 +207,9 @@ if estfuel > fuellevel() then
 else
 	print("Turtle has enough fuel for this, "..( fuellevel() - estfuel ).." to spare")
 end
- 
+
 if pullfrominv then refuel() end
- 
+
 beginfuel = fuellevel()
 
 print("Starting volume fill")
@@ -230,14 +230,13 @@ else
 	excavateXY()
 end]]
 if dirver == "u" then
-      turtle.turnRight()
-      turtle.turnRight()
+	turtle.turnRight()
+	turtle.turnRight()
 
-      for i = 1,y-1 do
-            turtle.place()
-            back()
-      end
-
+	for i = 1,y-1 do
+		turtle.place()
+		back()
+	end
 else
 
 end

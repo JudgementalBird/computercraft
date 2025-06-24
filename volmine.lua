@@ -127,44 +127,44 @@ argdirhor, argdirver, argx, argy, argz, argpullfrominv = ...
 
 args = {
     {   
-    	name = "argdirhor",
-        val = argdirhor,
-        type = "text",
-        valids = {"l","r"},
-        prefix = "direction L/R: "
-    },
-    {
-    	name = "argdirver",
-        val = argdirver,
-        type = "text",
-        valids = {"u","d"},
-        prefix = "direction U/D: "
-    },
-    {
-    	name = "argx",
-        val = argx,
-        type = "number",
-        prefix = "X size: "
-    },
-    {
-    	name = "argy",
-        val = argy,
-        type = "number",
-        prefix = "Y size: "
-    },
-    {
-    	name = "argz",
-        val = argz,
-        type = "number",
-        prefix = "Z size: "
-    },
-    {
-    	name = "argpullfrominv",
-        val = argpullfrominv,
-        type = "text",
-        valids = {"y","n"},
-        prefix = "pull fuel from inv Y/N: "
-    },
+		name = "argdirhor",
+		val = argdirhor,
+		type = "text",
+		valids = {"l","r"},
+		prefix = "direction L/R: "
+	},
+	{
+		name = "argdirver",
+		val = argdirver,
+		type = "text",
+		valids = {"u","d"},
+		prefix = "direction U/D: "
+	},
+	{
+		name = "argx",
+		val = argx,
+		type = "number",
+		prefix = "X size: "
+	},
+	{
+		name = "argy",
+		val = argy,
+		type = "number",
+		prefix = "Y size: "
+	},
+	{
+		name = "argz",
+		val = argz,
+		type = "number",
+		prefix = "Z size: "
+	},
+	{
+		name = "argpullfrominv",
+		val = argpullfrominv,
+		type = "text",
+		valids = {"y","n"},
+		prefix = "pull fuel from inv Y/N: "
+	},
 }
 
 types = {
@@ -207,7 +207,7 @@ function validateinputs()
 end
 
 function removeprefixes()
-    for k,v in ipairs(args) do
+    for _,v in ipairs(args) do
         _G[string.sub(v.name,4,#v.name)] = v.val
     end
 end
@@ -235,20 +235,20 @@ if estfuel > fuellevel() then
 else
 	print("Turtle has enough fuel for this, "..( fuellevel() - estfuel ).." to spare")
 end
- 
+
 if pullfrominv then refuel() end
- 
+
 print("Starting volume excavation")
 print("	---	")
 
 if dirver == "d" then
-	for i = 1,(z-1) do
+	for _ = 1,(z-1) do
 		excavateXY()
 		digdown()
 	end
 	excavateXY()
 else
-	for i = 1,(z-1) do
+	for _ = 1,(z-1) do
 		excavateXY()
 		digup()
 	end

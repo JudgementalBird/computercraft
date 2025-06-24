@@ -18,15 +18,15 @@ function pretty(a)
 	end
 end
 function copytable(datatable)--copied from internet
-  local tblRes={}
-  if type(datatable)=="table" then
-    for k,v in pairs(datatable) do
-      tblRes[copytable(k)] = copytable(v)
-    end
-  else
-    tblRes=datatable
-  end
-  return tblRes
+local tblRes={}
+if type(datatable)=="table" then
+	for k,v in pairs(datatable) do
+	tblRes[copytable(k)] = copytable(v)
+	end
+else
+	tblRes=datatable
+end
+return tblRes
 end
 
 
